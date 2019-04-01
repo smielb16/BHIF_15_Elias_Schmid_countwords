@@ -1,4 +1,10 @@
+package producer;
 
+
+import queue.DataQueue;
+import exception.FullQueueException;
+import gui.ThreadStatus;
+import queue.Book;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -15,13 +21,16 @@ import java.io.FileReader;
 public class Producer implements Runnable {
 
     private final DataQueue<Book> queue;
+    private final ThreadStatus status;
 
-    public Producer(DataQueue<Book> queue) {
+    public Producer(DataQueue<Book> queue, ThreadStatus status) {
         this.queue = queue;
+        this.status = status;
     }
 
     @Override
     public void run() {
+        status.doRun();
         File[] files = new File("files/").listFiles();
         for (File file : files) {
             try {
@@ -38,7 +47,9 @@ public class Producer implements Runnable {
                         queue.notifyAll();
                     } catch (FullQueueException ex) {
                         try{
+                            status.doWait();
                             queue.wait();
+                            status.doRun();
                         }
                         catch(Exception e){
                             
@@ -49,7 +60,6 @@ public class Producer implements Runnable {
 
             }
         }
-        
     }
 
 }
