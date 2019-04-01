@@ -16,10 +16,26 @@ public class DataQueue<T> {
     private LinkedList<T> data = new LinkedList<T>();
     private int maxSize = 3;
     
-    public DataQueue(T book) {
-        this.data.add(book);
+    public DataQueue(int maxSize) {
+        this.maxSize = maxSize;
     }
     
+    public T get() throws EmptyQueueException{
+        if(data.isEmpty()){
+            throw new EmptyQueueException();
+        }
+        else{
+            return data.poll();
+        }
+    }
     
+    public void put(T element) throws FullQueueException{
+        if(data.size() == maxSize){
+            throw new FullQueueException();
+        }
+        else{
+            data.add(element);
+        }
+    }
     
 }
