@@ -1,5 +1,6 @@
 
 import java.util.HashMap;
+import java.util.LinkedList;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -30,10 +31,15 @@ public class Book {
                 map.put(word, map.get(word) + 1);
             }
         }
+        
+        LinkedList<String> keys = new LinkedList<String>();
         for (String key : map.keySet()) {
             if(map.get(key) < 2){
-                map.remove(key);
+                keys.add(key);
             }
+        }
+        for(String key : keys){
+            map.remove(key);
         }
         return map;
     }

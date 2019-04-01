@@ -39,11 +39,11 @@ public class Consumer implements Runnable {
                 }
             }
             HashMap<String, Integer> map = book.countWords();
-            File f = new File(book.getFilename() + "_output");
+            File f = new File("output/" + book.getFilename() + "_output");
             try {
                 BufferedWriter bw = new BufferedWriter(new FileWriter(f));
                 for(String str : map.keySet()){
-                    bw.write(String.format("%s: %d", str, map.get(str)));
+                    bw.write(String.format("%s: %d\n", str, map.get(str)));
                 }
             } catch (Exception ex) {
 

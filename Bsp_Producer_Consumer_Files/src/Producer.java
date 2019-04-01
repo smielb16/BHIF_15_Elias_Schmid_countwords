@@ -26,9 +26,12 @@ public class Producer implements Runnable {
         for (File file : files) {
             try {
                 BufferedReader br = new BufferedReader(new FileReader(file));
+                String text = "";
                 String line = "";
-                while ((line += br.readLine()) != null) {}
-                Book book = new Book(line, file.getName());
+                while ((line = br.readLine()) != null) {
+                    text += line;
+                }
+                Book book = new Book(text, file.getName());
                 synchronized (queue) {
                     try {
                         queue.put(book);
