@@ -6,13 +6,12 @@ import java.util.HashMap;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author elisc
  */
 public class Book {
-    
+
     private String text;
     private String inputfilename;
 
@@ -20,9 +19,27 @@ public class Book {
         this.text = text;
         this.inputfilename = inputfilename;
     }
-    
-    public HashMap<String, Integer> countWords(){
-       return null;
+
+    public HashMap<String, Integer> countWords() {
+        String[] parts = text.split(" ");
+        HashMap<String, Integer> map = new HashMap();
+        for (String word : parts) {
+            if (!map.containsKey(word)) {
+                map.put(word, 1);
+            } else {
+                map.put(word, map.get(word) + 1);
+            }
+        }
+        for (String key : map.keySet()) {
+            if(map.get(key) < 2){
+                map.remove(key);
+            }
+        }
+        return map;
     }
-    
+
+    public String getFilename() {
+        return inputfilename;
+    }
+
 }
